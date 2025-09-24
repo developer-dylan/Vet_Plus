@@ -1,28 +1,44 @@
 ﻿using Vet_Plus.Models;
+using Vet_Plus.Services;
 
 class Program
 {
     static void Main()
     {
-        Owner owner = new Owner
-        {
-            Id = 1,
-            FullName = "Juan Pérez",
-            Phone = "555-1234",
-            Address = "Calle Falsa 123"
-        };
+        List<Patient> patients = new List<Patient>();
+        bool running = true;
 
-        Patient patient = new Patient
+        while (running)
         {
-            Id = 1,
-            Name = "Firulais",
-            Age = 4,
-            Species = "Perro",
-            Symptom = "No quiere comer",
-            Owner = owner
-        };
+            Console.WriteLine("\n--- Menú Principal ---");
+            Console.WriteLine("1. Registrar paciente");
+            Console.WriteLine("2. Listar pacientes");
+            Console.WriteLine("3. Buscar paciente");
+            Console.WriteLine("4. Salir");
+            Console.Write("Opción: ");
 
-        Console.WriteLine($"Mascota: {patient.Name}, Edad: {patient.Age}, Especie: {patient.Species}, Síntoma: {patient.Symptom}");
-        Console.WriteLine($"Dueño: {patient.Owner.FullName}, Teléfono: {patient.Owner.Phone}, Dirección: {patient.Owner.Address}");
+            string option = Console.ReadLine() ?? "";
+
+            switch (option)
+            {
+                case "1":
+                    PatientService.RegisterPatient(patients);
+                    break;
+                case "2":
+                    PatientService.ListPatients(patients);
+                    break;
+                case "3":
+                    Console.Write("Ingrese nombre a buscar: ");
+                    string name = Console.ReadLine() ?? "";
+                    PatientService.SearchPatientByName(patients, name);
+                    break;
+                case "4":
+                    running = false;
+                    break;
+                default:
+                    Console.WriteLine("Opción no válida.");
+                    break;
+            }
+        }
     }
 }
