@@ -51,8 +51,8 @@ namespace Vet_Plus.Services
                     Name = ownerName,
                     LastName = ownerLastName,
                     Identification = int.TryParse(identification, out int id) ? id : 0,
-                    Phone = phone,
                     Address = address,
+                    Phone = phone,
                     Email = email
                 };
 
@@ -75,7 +75,6 @@ namespace Vet_Plus.Services
             }
         }
 
-
         public static void ListPatients(List<Patient> patients)
         {
             Console.WriteLine("\n--- Lista de Pacientes ---");
@@ -89,7 +88,7 @@ namespace Vet_Plus.Services
             foreach (var p in patients)
             {
                 Console.WriteLine($"Mascota: {p.Name}, Edad: {p.Age}, Especie: {p.Species}, Síntoma: {p.Symptom}");
-                Console.WriteLine($"Dueño: {p.Owner.Name} {p.Owner.LastName}, Identificación: {p.Owner.Identification}, Dirección: {p.Owner.Address},  Teléfono: {p.Owner.Phone}, Email: {p.Owner.Email}");
+                Console.WriteLine($"Dueño: {p.Owner.Name} {p.Owner.LastName}, Identificación: {p.Owner.Identification}, Dirección: {p.Owner.Address}, Teléfono: {p.Owner.Phone}, Email: {p.Owner.Email}");
             }
         }
 
@@ -102,7 +101,7 @@ namespace Vet_Plus.Services
             if (patient != null)
             {
                 Console.WriteLine($"Mascota: {patient.Name}, Edad: {patient.Age}, Especie: {patient.Species}, Síntoma: {patient.Symptom}");
-                Console.WriteLine($"Dueño: {patient.Owner.Name} {patient.Owner.LastName}, Identificación: {patient.Owner.Identification}, Dirección: {patient.Owner.Address},  Teléfono: {patient.Owner.Phone}, Email: {patient.Owner.Email}");
+                Console.WriteLine($"Dueño: {patient.Owner.Name} {patient.Owner.LastName}, Identificación: {patient.Owner.Identification}, Dirección: {patient.Owner.Address}, Teléfono: {patient.Owner.Phone}, Email: {patient.Owner.Email}");
             }
             else
             {
