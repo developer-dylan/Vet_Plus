@@ -10,47 +10,54 @@ namespace Vet_Plus.Services
             {
                 Console.WriteLine("\n--- Registro de Paciente ---");
 
-                Console.Write("Ingrese ID de la mascota: ");
-                int id = int.Parse(Console.ReadLine() ?? "0");
-
-                Console.Write("Ingrese Nombre de la mascota: ");
+                Console.Write("Nombre: ");
                 string name = Console.ReadLine() ?? "";
 
-                Console.Write("Ingrese Edad de la mascota: ");
+                Console.Write("Edad: ");
                 if (!int.TryParse(Console.ReadLine(), out int age))
                 {
                     Console.WriteLine("Edad inválida. Registro cancelado.");
                     return;
                 }
 
-                Console.Write("Ingrese Especie (Perro, Gato, etc.): ");
+                Console.Write("Especie (Perro, Gato, etc.): ");
                 string species = Console.ReadLine() ?? "";
 
-                Console.Write("Ingrese Síntoma: ");
+                Console.Write("Síntoma: ");
                 string symptom = Console.ReadLine() ?? "";
 
                 Console.WriteLine("\n--- Datos del Dueño ---");
 
-                Console.Write("Ingrese Nombre completo del dueño: ");
+                Console.Write("Nombres: ");
                 string ownerName = Console.ReadLine() ?? "";
 
-                Console.Write("Ingrese Teléfono del dueño: ");
+                Console.Write("Apellidos: ");
+                string ownerLastName = Console.ReadLine() ?? "";
+
+                Console.Write("Identificación: ");
+                string identification = Console.ReadLine() ?? "";
+
+                Console.Write("Dirección: ");
+                string address = Console.ReadLine() ?? "";
+
+                Console.Write("Teléfono: ");
                 string phone = Console.ReadLine() ?? "";
 
-                Console.Write("Ingrese Dirección del dueño: ");
-                string address = Console.ReadLine() ?? "";
+                Console.Write("Email: ");
+                string email = Console.ReadLine() ?? "";
 
                 Owner owner = new Owner
                 {
-                    Id = id, // usamos el mismo ID de la mascota para simplificar
-                    FullName = ownerName,
+                    Name = ownerName,
+                    LastName = ownerLastName,
+                    Identification = int.TryParse(identification, out int id) ? id : 0,
                     Phone = phone,
-                    Address = address
+                    Address = address,
+                    Email = email
                 };
 
                 Patient newPatient = new Patient
                 {
-                    Id = id,
                     Name = name,
                     Age = age,
                     Species = species,
@@ -60,13 +67,14 @@ namespace Vet_Plus.Services
 
                 patients.Add(newPatient);
 
-                Console.WriteLine("\nPaciente registrado con éxito.");
+                Console.WriteLine($"\nPaciente registrado con éxito. ID asignado: {newPatient.Id}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en el registro: {ex.Message}");
             }
         }
+
 
         public static void ListPatients(List<Patient> patients)
         {
@@ -81,7 +89,7 @@ namespace Vet_Plus.Services
             foreach (var p in patients)
             {
                 Console.WriteLine($"Mascota: {p.Name}, Edad: {p.Age}, Especie: {p.Species}, Síntoma: {p.Symptom}");
-                Console.WriteLine($"  Dueño: {p.Owner.FullName}, Teléfono: {p.Owner.Phone}, Dirección: {p.Owner.Address}");
+                Console.WriteLine($"Dueño: {p.Owner.Name} {p.Owner.LastName}, Identificación: {p.Owner.Identification}, Dirección: {p.Owner.Address},  Teléfono: {p.Owner.Phone}, Email: {p.Owner.Email}");
             }
         }
 
@@ -94,7 +102,7 @@ namespace Vet_Plus.Services
             if (patient != null)
             {
                 Console.WriteLine($"Mascota: {patient.Name}, Edad: {patient.Age}, Especie: {patient.Species}, Síntoma: {patient.Symptom}");
-                Console.WriteLine($"Dueño: {patient.Owner.FullName}, Teléfono: {patient.Owner.Phone}, Dirección: {patient.Owner.Address}");
+                Console.WriteLine($"Dueño: {patient.Owner.Name} {patient.Owner.LastName}, Identificación: {patient.Owner.Identification}, Dirección: {patient.Owner.Address},  Teléfono: {patient.Owner.Phone}, Email: {patient.Owner.Email}");
             }
             else
             {
