@@ -12,30 +12,55 @@ namespace Vet_Plus.Services
 
                 Console.Write("Nombre: ");
                 string name = Console.ReadLine() ?? "";
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    Console.WriteLine("El nombre de la mascota no puede estar vacío.");
+                    return;
+                }
 
                 Console.Write("Edad: ");
                 if (!int.TryParse(Console.ReadLine(), out int age))
                 {
-                    Console.WriteLine("Edad inválida. Registro cancelado.");
+                    Console.WriteLine("Edad inválida. Debe ser un número.");
                     return;
                 }
 
                 Console.Write("Especie (Perro, Gato, etc.): ");
                 string species = Console.ReadLine() ?? "";
+                if (string.IsNullOrWhiteSpace(species))
+                {
+                    Console.WriteLine("La especie no puede estar vacía.");
+                    return;
+                }
 
                 Console.Write("Síntoma: ");
                 string symptom = Console.ReadLine() ?? "";
+                if (string.IsNullOrWhiteSpace(symptom))
+                {
+                    Console.WriteLine("El síntoma no puede estar vacío.");
+                    return;
+                }
 
                 Console.WriteLine("\n--- Datos del Dueño ---");
 
                 Console.Write("Nombres: ");
                 string ownerName = Console.ReadLine() ?? "";
+                if (string.IsNullOrWhiteSpace(ownerName))
+                {
+                    Console.WriteLine("El nombre del dueño no puede estar vacío.");
+                    return;
+                }
 
                 Console.Write("Apellidos: ");
                 string ownerLastName = Console.ReadLine() ?? "";
 
                 Console.Write("Identificación: ");
                 string identification = Console.ReadLine() ?? "";
+                if (!int.TryParse(identification, out int id))
+                {
+                    Console.WriteLine("Identificación inválida. Debe ser un número.");
+                    return;
+                }
 
                 Console.Write("Dirección: ");
                 string address = Console.ReadLine() ?? "";
@@ -50,7 +75,7 @@ namespace Vet_Plus.Services
                 {
                     Name = ownerName,
                     LastName = ownerLastName,
-                    Identification = int.TryParse(identification, out int id) ? id : 0,
+                    Identification = id,
                     Address = address,
                     Phone = phone,
                     Email = email
@@ -71,9 +96,10 @@ namespace Vet_Plus.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error en el registro: {ex.Message}");
+                Console.WriteLine($"Error inesperado: {ex.Message}");
             }
         }
+
 
         public static void ListPatients(List<Patient> patients)
         {
@@ -96,6 +122,12 @@ namespace Vet_Plus.Services
         {
             Console.WriteLine("\n--- Búsqueda de Paciente ---");
 
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Debe ingresar un nombre válido.");
+                return;
+            }
+
             var patient = patients.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
             if (patient != null)
@@ -108,5 +140,6 @@ namespace Vet_Plus.Services
                 Console.WriteLine("Paciente no encontrado.");
             }
         }
+
     }
 }
