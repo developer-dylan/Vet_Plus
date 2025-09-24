@@ -1,4 +1,5 @@
 using Vet_Plus.Models;
+using Vet_Plus.Utils;
 
 namespace Vet_Plus.Services
 {
@@ -10,72 +11,24 @@ namespace Vet_Plus.Services
             {
                 Console.WriteLine("\n--- Registro de Paciente ---");
 
-                Console.Write("Nombre: ");
-                string name = Console.ReadLine() ?? "";
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("El nombre de la mascota no puede estar vacío.");
-                    return;
-                }
-
-                Console.Write("Edad: ");
-                if (!int.TryParse(Console.ReadLine(), out int age))
-                {
-                    Console.WriteLine("Edad inválida. Debe ser un número.");
-                    return;
-                }
-
-                Console.Write("Especie (Perro, Gato, etc.): ");
-                string species = Console.ReadLine() ?? "";
-                if (string.IsNullOrWhiteSpace(species))
-                {
-                    Console.WriteLine("La especie no puede estar vacía.");
-                    return;
-                }
-
-                Console.Write("Síntoma: ");
-                string symptom = Console.ReadLine() ?? "";
-                if (string.IsNullOrWhiteSpace(symptom))
-                {
-                    Console.WriteLine("El síntoma no puede estar vacío.");
-                    return;
-                }
+                string name = InputValidator.ReadRequiredString("Nombre: ");
+                int age = InputValidator.ReadInt("Edad: ");
+                string species = InputValidator.ReadRequiredString("Especie (Perro, Gato, etc.): ");
+                string symptom = InputValidator.ReadRequiredString("Síntoma: ");
 
                 Console.WriteLine("\n--- Datos del Dueño ---");
-
-                Console.Write("Nombres: ");
-                string ownerName = Console.ReadLine() ?? "";
-                if (string.IsNullOrWhiteSpace(ownerName))
-                {
-                    Console.WriteLine("El nombre del dueño no puede estar vacío.");
-                    return;
-                }
-
-                Console.Write("Apellidos: ");
-                string ownerLastName = Console.ReadLine() ?? "";
-
-                Console.Write("Identificación: ");
-                string identification = Console.ReadLine() ?? "";
-                if (!int.TryParse(identification, out int id))
-                {
-                    Console.WriteLine("Identificación inválida. Debe ser un número.");
-                    return;
-                }
-
-                Console.Write("Dirección: ");
-                string address = Console.ReadLine() ?? "";
-
-                Console.Write("Teléfono: ");
-                string phone = Console.ReadLine() ?? "";
-
-                Console.Write("Email: ");
-                string email = Console.ReadLine() ?? "";
+                string ownerName = InputValidator.ReadRequiredString("Nombres: ");
+                string ownerLastName = InputValidator.ReadRequiredString("Apellidos: ");
+                int identification = InputValidator.ReadInt("Identificación: ");
+                string address = InputValidator.ReadRequiredString("Dirección: ");
+                string phone = InputValidator.ReadRequiredString("Teléfono: ");
+                string email = InputValidator.ReadRequiredString("Email: ");
 
                 Owner owner = new Owner
                 {
                     Name = ownerName,
                     LastName = ownerLastName,
-                    Identification = id,
+                    Identification = identification,
                     Address = address,
                     Phone = phone,
                     Email = email
@@ -91,8 +44,11 @@ namespace Vet_Plus.Services
                 };
 
                 patients.Add(newPatient);
-
                 Console.WriteLine($"\nPaciente registrado con éxito. ID asignado: {newPatient.Id}");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Error de validación: {ex.Message}");
             }
             catch (Exception ex)
             {
