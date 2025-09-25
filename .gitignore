@@ -1,0 +1,22 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Backup / temp files
+*.tmp
+*.bak
+*.swp
+*.DS_Store
