@@ -110,9 +110,9 @@ namespace Vet_Plus.Services
 
         public static void RunLinqQueries(List<Patient> patients)
         {
-            Console.WriteLine("\n--- Consultas LINQ---");
+            Console.WriteLine("\n--- Consultas LINQ ---");
 
-            // Pacientes mayores de 5 años
+            // 1. Pacientes mayores de 5 años
             var mayores = patients.Where(p => p.Age > 5).ToList();
             Console.WriteLine("\nPacientes mayores de 5 años:");
             foreach (var p in mayores)
@@ -120,15 +120,15 @@ namespace Vet_Plus.Services
                 Console.WriteLine($"- {p.Name} ({p.Age} años)");
             }
 
-            // Nombres de todos los pacientes
+            // 2. Nombres de todos los pacientes
             var nombres = patients.Select(p => p.Name).ToList();
             Console.WriteLine("\nNombres de pacientes:");
             nombres.ForEach(n => Console.WriteLine($"- {n}"));
 
-            // Pacientes agrupados por especie
-            var grupos = patients.GroupBy(p => p.Species);
+            // 3. Pacientes agrupados por especie
+            var groups = patients.GroupBy(p => p.Species);
             Console.WriteLine("\nPacientes agrupados por especie:");
-            foreach (var g in grupos)
+            foreach (var g in groups)
             {
                 Console.WriteLine($"Especie: {g.Key} ({g.Count()} pacientes)");
                 foreach (var p in g)
@@ -137,19 +137,51 @@ namespace Vet_Plus.Services
                 }
             }
 
-            // Perros ordenados por edad
-            var perrosOrdenados = patients
+            // 4. Perros ordenados por edad
+            var dogssortedbyage = patients
                 .Where(p => p.Species == "Perro")
                 .OrderBy(p => p.Age)
                 .ToList();
 
             Console.WriteLine("\nPerros ordenados por edad:");
-            foreach (var p in perrosOrdenados)
+            foreach (var p in dogssortedbyage)
             {
                 Console.WriteLine($"- {p.Name} ({p.Age} años)");
             }
-        }
 
+            // --- Task 3: Métodos fundamentales LINQ ---
+
+            // 5. Primer paciente registrado
+            var firstpatient = patients.FirstOrDefault();
+            if (firstpatient != null)
+            {
+                Console.WriteLine($"\nPrimer paciente registrado: {firstpatient.Name} ({firstpatient.Age} años)");
+            }
+            else
+            {
+                Console.WriteLine("\nNo hay pacientes registrados.");
+            }
+
+            // 6. Verificar si hay algún gato
+            bool hayGatos = patients.Any(p => p.Species == "Gato");
+            Console.WriteLine($"\n¿Hay gatos registrados?: {(hayGatos ? "Sí" : "No")}");
+
+            // 7. Verificar si todos los dueños tienen teléfono
+            bool todosConTelefono = patients.All(p => !string.IsNullOrWhiteSpace(p.Owner.Phone));
+            Console.WriteLine($"¿Todos los dueños tienen teléfono?: {(todosConTelefono ? "Sí" : "No")}");
+
+            // 8. Contar pacientes
+            int totalPacientes = patients.Count();
+            Console.WriteLine($"\nTotal de pacientes registrados: {totalPacientes}");
+
+            // 9. Edad mínima y máxima
+            if (patients.Any())
+            {
+                int edadMinima = patients.Min(p => p.Age);
+                int edadMaxima = patients.Max(p => p.Age);
+                Console.WriteLine($"Edad mínima: {edadMinima}, Edad máxima: {edadMaxima}");
+            }
+        }
 
     }
 }
