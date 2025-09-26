@@ -11,7 +11,6 @@ namespace Vet_Plus.Services
             {
                 Console.WriteLine("\n--- Registro de Paciente ---");
 
-                // Aquí usas tu InputValidator o Console.ReadLine como lo tenías
                 string name = InputValidator.ReadRequiredString("Nombre: ");
                 int age = InputValidator.ReadInt("Edad: ");
                 string species = InputValidator.ReadRequiredString("Especie (Perro, Gato, etc.): ");
@@ -108,6 +107,49 @@ namespace Vet_Plus.Services
             Console.WriteLine($"Mascota: {patient.Name}, Edad: {patient.Age}, Especie: {patient.Species}, Síntoma: {patient.Symptom}");
             Console.WriteLine($"Dueño: {patient.Owner.Name} {patient.Owner.LastName}, ID: {patient.Owner.Identification}, Dirección: {patient.Owner.Address}, Teléfono: {patient.Owner.Phone}, Email: {patient.Owner.Email}");
         }
+
+        public static void RunLinqQueries(List<Patient> patients)
+        {
+            Console.WriteLine("\n--- Consultas LINQ ---");
+
+            // Pacientes mayores de 5 años
+            var mayores = patients.Where(p => p.Age > 5).ToList();
+            Console.WriteLine("\nPacientes mayores de 5 años:");
+            foreach (var p in mayores)
+            {
+                Console.WriteLine($"- {p.Name} ({p.Age} años)");
+            }
+
+            // Nombres de todos los pacientes
+            var nombres = patients.Select(p => p.Name).ToList();
+            Console.WriteLine("\nNombres de pacientes:");
+            nombres.ForEach(n => Console.WriteLine($"- {n}"));
+
+            // Agrupados por especie
+            var grupos = patients.GroupBy(p => p.Species);
+            Console.WriteLine("\nPacientes agrupados por especie:");
+            foreach (var g in grupos)
+            {
+                Console.WriteLine($"Especie: {g.Key} ({g.Count()} pacientes)");
+                foreach (var p in g)
+                {
+                    Console.WriteLine($"  - {p.Name}");
+                }
+            }
+
+            // Sintaxis de consulta: perros ordenados por edad
+            var consulta = from p in patients
+                        where p.Species == "Perro"
+                        orderby p.Age
+                        select p;
+
+            Console.WriteLine("\nPerros ordenados por edad:");
+            foreach (var p in consulta)
+            {
+                Console.WriteLine($"- {p.Name} ({p.Age} años)");
+            }
+        }
+
 
     }
 }
