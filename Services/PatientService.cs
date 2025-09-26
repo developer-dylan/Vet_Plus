@@ -110,7 +110,7 @@ namespace Vet_Plus.Services
 
         public static void RunLinqQueries(List<Patient> patients)
         {
-            Console.WriteLine("\n--- Consultas LINQ ---");
+            Console.WriteLine("\n--- Consultas LINQ---");
 
             // Pacientes mayores de 5 años
             var mayores = patients.Where(p => p.Age > 5).ToList();
@@ -125,7 +125,7 @@ namespace Vet_Plus.Services
             Console.WriteLine("\nNombres de pacientes:");
             nombres.ForEach(n => Console.WriteLine($"- {n}"));
 
-            // Agrupados por especie
+            // Pacientes agrupados por especie
             var grupos = patients.GroupBy(p => p.Species);
             Console.WriteLine("\nPacientes agrupados por especie:");
             foreach (var g in grupos)
@@ -137,14 +137,14 @@ namespace Vet_Plus.Services
                 }
             }
 
-            // Sintaxis de consulta: perros ordenados por edad
-            var consulta = from p in patients
-                        where p.Species == "Perro"
-                        orderby p.Age
-                        select p;
+            // Perros ordenados por edad
+            var perrosOrdenados = patients
+                .Where(p => p.Species == "Perro")
+                .OrderBy(p => p.Age)
+                .ToList();
 
             Console.WriteLine("\nPerros ordenados por edad:");
-            foreach (var p in consulta)
+            foreach (var p in perrosOrdenados)
             {
                 Console.WriteLine($"- {p.Name} ({p.Age} años)");
             }
