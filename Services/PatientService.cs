@@ -5,12 +5,13 @@ namespace Vet_Plus.Services
 {
     public static class PatientService
     {
-        public static void RegisterPatient(List<Patient> patients)
+        public static Patient? RegisterPatient(List<Patient> patients)
         {
             try
             {
                 Console.WriteLine("\n--- Registro de Paciente ---");
 
+                // Aquí usas tu InputValidator o Console.ReadLine como lo tenías
                 string name = InputValidator.ReadRequiredString("Nombre: ");
                 int age = InputValidator.ReadInt("Edad: ");
                 string species = InputValidator.ReadRequiredString("Especie (Perro, Gato, etc.): ");
@@ -45,16 +46,21 @@ namespace Vet_Plus.Services
 
                 patients.Add(newPatient);
                 Console.WriteLine($"\nPaciente registrado con éxito. ID asignado: {newPatient.Id}");
+
+                return newPatient;
             }
             catch (ArgumentException ex)
             {
                 Console.WriteLine($"Error de validación: {ex.Message}");
+                return null;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error inesperado: {ex.Message}");
+                return null;
             }
         }
+
 
 
         public static void ListPatients(List<Patient> patients)
@@ -95,6 +101,12 @@ namespace Vet_Plus.Services
             {
                 Console.WriteLine("Paciente no encontrado.");
             }
+        }
+
+        public static void ShowPatient(Patient patient)
+        {
+            Console.WriteLine($"Mascota: {patient.Name}, Edad: {patient.Age}, Especie: {patient.Species}, Síntoma: {patient.Symptom}");
+            Console.WriteLine($"Dueño: {patient.Owner.Name} {patient.Owner.LastName}, ID: {patient.Owner.Identification}, Dirección: {patient.Owner.Address}, Teléfono: {patient.Owner.Phone}, Email: {patient.Owner.Email}");
         }
 
     }
