@@ -34,6 +34,7 @@ class Program
                 }
                 break;
             case "2":
+            
                 PatientService.ListPatients(patients);
                 break;
             case "3":
