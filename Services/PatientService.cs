@@ -68,7 +68,7 @@ public static class PatientService
 
         if (patients.Count == 0)
         {
-            Console.WriteLine("No hay pacientes registrados.");
+            Console.WriteLine("No hay pacientes registrados");
             return;
         }
 
